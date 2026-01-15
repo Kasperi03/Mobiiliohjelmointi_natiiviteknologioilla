@@ -37,11 +37,17 @@ Datamalli (Task)
 
 Sovelluksessa käytetään Task-data classia, joka kuvaa yksittäistä tehtävää.
 Task sisältää muun muassa seuraavat tiedot:
+
 -id
+
 -title
+
 -description
+
 .priority
+
 -dueDate
+
 -done
 
 Task-luokkaa käytetään sovelluksen kaikessa logiikassa ja UI:ssa tehtävien esittämiseen ja muokkaamiseen.
