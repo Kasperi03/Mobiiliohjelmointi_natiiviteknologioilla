@@ -13,7 +13,7 @@ Android Studio -projekti (Compose-template)
 
 domain/-paketti, joka sisältää:
 
-Task data class (id, title, dueDate, done)
+Task data class (id, title, description, priority, dueDate, done)
 
 5–10 kappaletta mock-dataa listana
 
@@ -39,6 +39,8 @@ Sovelluksessa käytetään Task-data classia, joka kuvaa yksittäistä tehtävä
 Task sisältää muun muassa seuraavat tiedot:
 -id
 -title
+-description
+.priority
 -dueDate
 -done
 
@@ -52,13 +54,13 @@ addTask()
 Lisää uuden tehtävän tehtävälistaan annettujen tietojen perusteella.
 
 toggleDone()
-Vaihtaa tehtävän tilan false → true jolloin tehtävä voidaan merkitä tehdyksi.
+Vaihtaa tehtävän tilan false → true tai true -> false jolloin tehtävä voidaan merkitä tehdyksi tai ei tehdyksi.
 
 filterByDone()
-Suodattaa tehtävälistan ja palauttaa vain tehtävät, jotka ovat tehtyjä,
+Suodattaa tehtävälistan ja palauttaa vain tehtävät, jotka ovat tehtyjä tai ei tehtyjä
 
 sortByDueDate()
-Järjestää tehtävät eräpäivän mukaan. (Tämä toiminnallisuus ei ole täysin toiminnallinen.)
+Järjestää tehtävät eräpäivän mukaan.
 
 Käyttöliittymä (HomeScreen)
 
