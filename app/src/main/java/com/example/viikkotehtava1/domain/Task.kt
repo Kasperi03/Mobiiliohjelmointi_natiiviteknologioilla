@@ -1,21 +1,19 @@
 package com.example.viikkotehtava1.domain
 
 import androidx.compose.runtime.mutableStateListOf
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import java.time.LocalDate
 
 data class Task(
     val task: String = "",
     var id: Int = 0,
+    val description: String = "",
+    var priority: Int = 0,
     val done: Boolean = false,
-    val dueDay: String = "00.00.0000"
+    val dueDay: LocalDate
 )
 class taskList {
-    val currentDate = SimpleDateFormat("dd.MM.yyyy",
-        Locale.getDefault()).format(Date())
     val items = mutableStateListOf<Task>()
-    fun addTask(taskName: String, dueDay: String, done: Boolean) {
+    fun addTask(taskName: String, dueDay: LocalDate, done: Boolean) {
         val newTask = Task(
             task = taskName,
             id = items.size + 1,
