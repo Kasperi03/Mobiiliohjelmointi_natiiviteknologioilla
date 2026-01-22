@@ -1,95 +1,26 @@
-Viikkotehtävä 1 – Kotlin-perusteet ja ensimmäinen Compose-näkymä
-Kuvaus
+**Viikkotehtävä 2 – Kotlin + Compose: Tehtävälista ViewModelilla**
 
-### APK-tiedosto
-Voit ladata sovelluksen tästä: [Viikkotehtava1_sovellus.apk](https://github.com/Kasperi03/Viikkotehtava-1-Kotlin-perusteet/raw/main/ApkBackup/Viikkotehtava1_sovellus.apk)
+**Kuvaus**
+Week2-projekti laajentaa Week1-tehtävää. Sovellus on tehtävälista, jossa voi:
+- lisätä, poistaa ja merkitä tehtäviä tehdyiksi
+- suodattaa ja järjestää tehtäviä
+- UI päivittyy automaattisesti ViewModelin tilamuutosten perusteella
 
-Tämän tehtävän tavoitteena oli opetella Kotlinin perusteita sekä luoda ensimmäinen Android-sovellus Jetpack Composea käyttäen. Sovellus on yksinkertainen tehtävälista, jossa käyttäjä voi tarkastella tehtäviä, merkitä niitä tehdyiksi sekä suodattaa ja järjestää listaa eri tavoin.
+**Toteutus**
+- **TaskViewModel**: sisältää MutableState<List<Task>>, mock-datan initissa, funktiot addTask, toggleDone, removeTask, filterByDone, sortByDueDate
+- **HomeScreen**: näyttää tehtävälistan LazyColumnilla, sisältää Checkboxin done-tilan hallintaan, poista-painikkeen ja uuden tehtävän lisäyksen
+- **MainActivity**: käynnistää sovelluksen, kutsuu HomeScreeniä
+- **Task data class**: id, title, description, priority, dueDay, done
 
-Projektissa keskitytään erityisesti domain-logiikan ja käyttöliittymän erotteluun sekä Kotlin-funktioiden käyttöön.
+**Tilanhallinta**
+- Sovellus käyttää **ViewModelia**, jotta UI päivittyy automaattisesti ja muistuttaa tilaa oikein eri Composable-kutsujen välillä
 
-Tehtävän vaatimukset
+**Sovelluksen ajaminen**
+- Android Studio + emulaattori tai fyysinen laite
+- Debug-tilassa ajettaessa kaikki toiminnot näkyvät
 
-Tehtävässä vaadittiin seuraavat asiat:
+**Release / APK**
+- APK löytyy GitHub Release -kohdasta
 
-Android Studio -projekti (Compose-template)
+**Tekijä:** Kasperi Mustonen
 
-domain/-paketti, joka sisältää:
-
-Task data class (id, title, description, priority, dueDate, done)
-
-5–10 kappaletta mock-dataa listana
-
-Kotlin-funktiot tehtävälistan käsittelyyn:
-
--addTask
-
--toggleDone
-
--filterByDone
-
--sortByDueDate
-
-Ensimmäinen Compose-näkymä HomeScreen, joka:
-
-näyttää otsikon ja tehtävälistan
-
-käyttää Column-, Row- ja Modifier-rakenteita
-
-Datamalli (Task)
-
-Sovelluksessa käytetään Task-data classia, joka kuvaa yksittäistä tehtävää.
-Task sisältää muun muassa seuraavat tiedot:
-
--id
-
--title
-
--description
-
-.priority
-
--dueDate
-
--done
-
-Task-luokkaa käytetään sovelluksen kaikessa logiikassa ja UI:ssa tehtävien esittämiseen ja muokkaamiseen.
-
-Kotlin-funktiot
-
-Domain-pakettiin on toteutettu useita Kotlin-funktioita tehtävälistan käsittelyä varten:
-
-addTask()
-Lisää uuden tehtävän tehtävälistaan annettujen tietojen perusteella.
-
-toggleDone()
-Vaihtaa tehtävän tilan false → true tai true -> false jolloin tehtävä voidaan merkitä tehdyksi tai ei tehdyksi.
-
-filterByDone()
-Suodattaa tehtävälistan ja palauttaa vain tehtävät, jotka ovat tehtyjä tai ei tehtyjä
-
-sortByDueDate()
-Järjestää tehtävät eräpäivän mukaan.
-
-Käyttöliittymä (HomeScreen)
-
-Sovelluksen käyttöliittymä on toteutettu Jetpack Composella HomeScreen-näkymässä.
-
-HomeScreen:
--näyttää otsikon ja tehtävälistan
--käyttää Column, Row, LazyColumn, Text ja Button -komponentteja
--sisältää nappeja, joilla kutsutaan domain-paketin Kotlin-funktioita
--vastaa UI:n päivittämisestä, kun tehtäviä lisätään tai niiden tila muuttuu
-
-MainActivity:
-MainActivity vastaa sovelluksen käynnistämisestä.
-Se sisältää vain HomeScreen-Composable-funktion kutsun, joka renderöi koko sovelluksen käyttöliittymän.
-
-Sovelluksen ajaminen
-
-Sovelluksen ajamiseen tarvitaan:
--Android Studio
--Android-emulaattori tai fyysinen Android-laite
--Projekti avataan Android Studiossa ja ajetaan joko emulaattorilla tai liitetyllä fyysisellä laitteella debug-tilassa.
-
-Tekijä: Kasperi Mustonen
