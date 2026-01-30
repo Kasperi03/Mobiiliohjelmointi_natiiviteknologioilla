@@ -1,26 +1,61 @@
-**Viikkotehtävä 2 – Kotlin + Compose: Tehtävälista ViewModelilla**
+**Viikkotehtävä 3 – Kotlin + Compose: Tehtävälista MVVM + StateFlow**
 
 **Kuvaus**
-Week2-projekti laajentaa Week1-tehtävää. Sovellus on tehtävälista, jossa voi:
-- lisätä, poistaa ja merkitä tehtäviä tehdyiksi
-- suodattaa ja järjestää tehtäviä
-- UI päivittyy automaattisesti ViewModelin tilamuutosten perusteella
+Week3-projekti laajentaa Week2-tehtävää. Sovellus on tehtävälista, jossa voi:
+
+lisätä, poistaa ja merkitä tehtäviä tehdyiksi
+
+suodattaa tehtäviä “done” / “not done”
+
+järjestää tehtäviä eräpäivän mukaan
+
+avata dialogin, jossa voi muokata tehtävän tietoja
+
+palauttaa kaikki tehtävät "Show All" -napilla
+
+UI päivittyy automaattisesti ViewModelin tilamuutosten perusteella (StateFlow).
 
 **Toteutus**
-- **TaskViewModel**: sisältää MutableState<List<Task>>, mock-datan initissa, funktiot addTask, toggleDone, removeTask, filterByDone, sortByDueDate
-- **HomeScreen**: näyttää tehtävälistan LazyColumnilla, sisältää Checkboxin done-tilan hallintaan, poista-painikkeen ja uuden tehtävän lisäyksen
-- **MainActivity**: käynnistää sovelluksen, kutsuu HomeScreeniä
-- **Task data class**: id, title, description, priority, dueDay, done
+TaskViewModel:
 
-**Tilanhallinta**
-- Sovellus käyttää **ViewModelia**, jotta UI päivittyy automaattisesti ja muistuttaa tilaa oikein eri Composable-kutsujen välillä
+hallitsee tehtävälistaa MutableStateFlow<List<Task>>
+
+master-lista allTasks säilyttää kaikki tehtävät filttereistä huolimatta
+
+funktiot: addTask, toggleDone, removeTask, updateTask, filterByDone, sortByDueDate, clearTask, showAll
+
+HomeScreen:
+
+näyttää tehtävälistan LazyColumnilla
+
+sisältää checkboxin done-tilan hallintaan, poista-painikkeen ja uuden tehtävän lisäyksen
+
+suodatusnapit ja showAll-nappi
+
+DetailDialog:
+
+avautuu valitun tehtävän muokkaamista varten
+
+sisältää “Update” ja “Close” -napit
+
+Task data class:
+
+id, title, description, priority, dueDay, done
+
+Tilanhallinta (StateFlow)
+
+tasks: StateFlow<List<Task>> ja selectedTask: StateFlow<Task?> hallitsevat sovelluksen tilaa
+
+UI kuuntelee tilaa collectAsState()-kutsulla
+
+Tilamuutokset päivittyvät heti näkyviin dialogiin ja listaan
 
 **Sovelluksen ajaminen**
-- Android Studio + emulaattori tai fyysinen laite
-- Debug-tilassa ajettaessa kaikki toiminnot näkyvät
+Android Studio + emulaattori tai fyysinen laite
 
-**Release / APK**
-- APK löytyy GitHub Release -kohdasta
+Debug-tilassa kaikki toiminnot näkyvät
+
+Release / APK: GitHub Release -kohdasta
 
 **Tekijä:** Kasperi Mustonen
 
