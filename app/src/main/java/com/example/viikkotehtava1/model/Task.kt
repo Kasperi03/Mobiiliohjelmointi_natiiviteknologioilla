@@ -1,4 +1,4 @@
-package com.example.viikkotehtava1.domain
+package com.example.viikkotehtava1.model
 
 import java.time.LocalDate
 data class Task(

@@ -1,5 +1,6 @@
-package com.example.viikkotehtava1.screens
+package com.example.viikkotehtava1.view
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -28,12 +29,20 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import java.time.LocalDate
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Checkbox
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import com.example.viikkotehtava1.model.Task
 
 @Composable
 fun HomeScreen(viewModel: TaskViewModel = viewModel()) {
-    val tasks = viewModel.tasks
+    val tasks by viewModel.tasks.collectAsState()
+    val selectedTask by viewModel.selectedTask.collectAsState()
+
+    if ( selectedTask != null){
+        DetailDialog(task = selectedTask!!, onClose = { viewModel.clearTask() },
+            onUpdate = { viewModel.updateTask(it) })
+    }
 
 Column {
 
@@ -54,14 +63,14 @@ Column {
                 Text("Sort by due day")
             }
             Spacer(modifier = Modifier.width(8.dp))
-            Button(onClick = { viewModel.tasks }) {
+            Button(onClick = { viewModel.showAll()}) {
                 Text("Show All")
             }
         }
     }
     LazyColumn(modifier = Modifier.weight(1f)) {
         items(tasks) { task ->
-            Card(modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+            Card(modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp).clickable { viewModel.selectTask(task.id) },
                 colors = CardDefaults.cardColors(containerColor = Color.White),
                 ) {
                 Row( modifier = Modifier.padding(16.dp),
@@ -84,21 +93,19 @@ Column {
     Column(modifier = Modifier.padding(16.dp)) {
 
         Row(modifier = Modifier.padding(16.dp)) {
-            var newTask by remember { mutableStateOf("") }
+            var task by remember { mutableStateOf("") }
 
             OutlinedTextField(
-                value = newTask,
-                onValueChange = { newTask = it },
+                value = task,
+                onValueChange = { task = it },
                 modifier = Modifier.weight(1f),
                 placeholder = { Text("Write task") },
                 textStyle = TextStyle(color = Color.Black)
             )
             Spacer(modifier = Modifier.width(8.dp))
-            Button(onClick = { viewModel.addTask(newTask,
-                description = "", priority = 1,
-                dueDay = LocalDate.now(), done = false)
-                newTask = "" }) {
-                Text("Add Task")
+            Button(onClick = { viewModel.addTask(Task(task,0,
+                "",0,false, LocalDate.now()))}){
+                Text("Add task")
             }
         }
     }
