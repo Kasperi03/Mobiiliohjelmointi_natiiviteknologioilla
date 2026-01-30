@@ -1,61 +1,40 @@
 **Viikkotehtävä 3 – Kotlin + Compose: Tehtävälista MVVM + StateFlow**
 
-**Kuvaus**
-Week3-projekti laajentaa Week2-tehtävää. Sovellus on tehtävälista, jossa voi:
+**MVVM (Model-View-ViewModel)**
 
-lisätä, poistaa ja merkitä tehtäviä tehdyiksi
+**MVVM on arkkitehtuurimalli, jossa sovelluksen eri osat erotetaan selkeästi:**
 
-suodattaa tehtäviä “done” / “not done”
+Model sisältää datan (Task)
 
-järjestää tehtäviä eräpäivän mukaan
+ViewModel hallitsee sovelluksen tilaa ja logiikkaa
 
-avata dialogin, jossa voi muokata tehtävän tietoja
+View (Compose UI) näyttää tiedon ja kuuntelee ViewModelin tilaa
 
-palauttaa kaikki tehtävät "Show All" -napilla
+**Hyöty Compose-sovelluksissa:**
 
-UI päivittyy automaattisesti ViewModelin tilamuutosten perusteella (StateFlow).
+UI pysyy yksinkertaisena, koska se ei hallitse logiikkaa
 
-**Toteutus**
-TaskViewModel:
+Tilamuutokset päivittyvät automaattisesti, jolloin Compose recomposoi tarvittavat komponentit
 
-hallitsee tehtävälistaa MutableStateFlow<List<Task>>
+Koodin ylläpito ja testaus helpottuvat
 
-master-lista allTasks säilyttää kaikki tehtävät filttereistä huolimatta
+**StateFlow**
 
-funktiot: addTask, toggleDone, removeTask, updateTask, filterByDone, sortByDueDate, clearTask, showAll
+**StateFlow on Kotlin Coroutines -kirjaston tila- ja tapahtumavirta:**
 
-HomeScreen:
+MutableStateFlow: muokattava tila ViewModelissa
 
-näyttää tehtävälistan LazyColumnilla
+StateFlow: UI kuuntelee vain lukuoikeudella
 
-sisältää checkboxin done-tilan hallintaan, poista-painikkeen ja uuden tehtävän lisäyksen
+Kun value muuttuu, kaikki kuuntelijat saavat uuden tilan heti
 
-suodatusnapit ja showAll-nappi
+**Hyöty sovelluksessa:**
 
-DetailDialog:
+UI päivittyy automaattisesti, kun tilaa muutetaan ViewModelissa
 
-avautuu valitun tehtävän muokkaamista varten
+Ei tarvita imperatiivista päivityskoodia
 
-sisältää “Update” ja “Close” -napit
-
-Task data class:
-
-id, title, description, priority, dueDay, done
-
-Tilanhallinta (StateFlow)
-
-tasks: StateFlow<List<Task>> ja selectedTask: StateFlow<Task?> hallitsevat sovelluksen tilaa
-
-UI kuuntelee tilaa collectAsState()-kutsulla
-
-Tilamuutokset päivittyvät heti näkyviin dialogiin ja listaan
-
-**Sovelluksen ajaminen**
-Android Studio + emulaattori tai fyysinen laite
-
-Debug-tilassa kaikki toiminnot näkyvät
-
-Release / APK: GitHub Release -kohdasta
+Sovellus pysyy reaktiivisena ja MVVM-logiikka selkeänä
 
 **Tekijä:** Kasperi Mustonen
 
