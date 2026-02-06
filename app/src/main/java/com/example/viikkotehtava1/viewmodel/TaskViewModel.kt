@@ -7,8 +7,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlin.collections.plus
 
-
-
 class TaskViewModel : ViewModel() {
     private val _tasks = MutableStateFlow<List<Task>>(emptyList())
     val tasks: StateFlow<List<Task>> = _tasks
@@ -17,6 +15,10 @@ class TaskViewModel : ViewModel() {
     val selectedTask: StateFlow<Task?> = _selectedTask
 
     private var allTasks: List<Task> = mockTask
+
+    init {
+        _tasks.value = allTasks
+    }
 
     fun addTask(newTask: Task){
         allTasks = allTasks + newTask

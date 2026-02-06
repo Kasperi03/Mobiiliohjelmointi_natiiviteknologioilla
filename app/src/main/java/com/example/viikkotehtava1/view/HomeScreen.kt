@@ -28,27 +28,48 @@ import androidx.compose.ui.text.TextStyle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import java.time.LocalDate
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import com.example.viikkotehtava1.model.Task
-
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(viewModel: TaskViewModel = viewModel()) {
+fun HomeScreen(
+    viewModel: TaskViewModel,
+    onNavigateCalendar: () -> Unit
+) {
     val tasks by viewModel.tasks.collectAsState()
     val selectedTask by viewModel.selectedTask.collectAsState()
 
-    if ( selectedTask != null){
-        DetailDialog(task = selectedTask!!, onClose = { viewModel.clearTask() },
-            onUpdate = { viewModel.updateTask(it) })
+    if (selectedTask != null) {
+        DetailDialog(
+            task = selectedTask!!,
+            onClose = { viewModel.clearTask() },
+            onUpdate = { viewModel.updateTask(it) }
+        )
     }
 
-Column {
+    Column {
+        TopAppBar(
+            title = { Text("Task List") },
+            actions = {
+                IconButton(onClick = onNavigateCalendar) {
+                    Icon(
+                        imageVector = Icons.Default.CalendarMonth,
+                        contentDescription = "Go to calendar"
+                    )
+                }
+            }
+        )
 
     Column(modifier = Modifier.padding(16.dp)) {
-        Text("Task List", fontSize = 24.sp, fontWeight = FontWeight.Bold)
-        Spacer(modifier = Modifier.height(12.dp))
         Row {
             Button(onClick = { viewModel.filterByDone(done = true) }) {
                 Text("Show Done")
